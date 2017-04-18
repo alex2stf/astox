@@ -1,0 +1,10 @@
+nbproject/
+build/
+.settings/
+.cproject
+MakefileSelfGen.mk
+bin/
+projects/
+src/.DS_Store
+src/archive/.DS_Store
+/Debug

@@ -1,0 +1,36 @@
+ASTOX_SRC=src/astox/
+CODE_SRC=src/
+DEFINES=
+BUILD_DIR = build/
+BIN_DIR=bin/
+FFMPEG_LIBS=-L/opt/local/lib -ljpeg -lavformat -lavcodec -lavutil -lswscale -lswresample -lrtmp -lmp3lame -lssl -lcrypto -lz -lboost_filesystem-mt -lboost_regex-mt -lboost_thread-mt -lboost_system-mt -lboost_chrono-mt
+HIREDIS_DIR=/Users/alexstf/Documents/cpp_libs/hiredis-master
+HIREDIS_OBJS=$(BUILD_DIR)net.o $(BUILD_DIR)hiredis.o $(BUILD_DIR)sds.o $(BUILD_DIR)async.o $(BUILD_DIR)read.o
+HIREDIS_SRCS=$(HIREDIS_DIR)/net.c $(HIREDIS_DIR)/hiredis.c $(HIREDIS_DIR)/sds.c $(HIREDIS_DIR)/async.c $(HIREDIS_DIR)/read.c
+
+WEBSOCKET_INCLUDES=-I/Users/alexstf/Documents/cpp_libs/websocketpp-master
+LIBRTMP_INCLUDE=/Users/alexstf/Documents/cpp_libs/rtmpdump
+LIBRTMP_SRC=/Users/alexstf/Documents/cpp_libs/rtmpdump/librtmp/
+LIBRTMP_OBJS=$(BUILD_DIR)rtmp.o $(BUILD_DIR)parseurl.o $(BUILD_DIR)log.o $(BUILD_DIR)hashswf.o $(BUILD_DIR)amf.o
+
+INCLUDES=-I/opt/local/include -I$(HIREDIS_DIR) -I$(LIBRTMP_INCLUDE)
+
+all: librtmp hiredis ffipush
+
+ffipush:
+	g++ $(HIREDIS_OBJS) $(LIBRTMP_OBJS) $(ASTOX_SRC)CApi.c  $(CODE_SRC)ffipush.cpp $(DEFINES) $(INCLUDES) $(WEBSOCKET_INCLUDES) $(FFMPEG_LIBS) -o $(BIN_DIR)ffipush
+	gcc $(HIREDIS_OBJS) $(ASTOX_SRC)CApi.c  $(CODE_SRC)muxing.c $(DEFINES) $(INCLUDES) $(WEBSOCKET_INCLUDES) $(FFMPEG_LIBS) -o $(BIN_DIR)muxing
+	
+librtmp:
+	gcc -Wall   -DRTMPDUMP_VERSION=\"v2.4\" -DUSE_OPENSSL  -O2 -fPIC  -c -o $(BUILD_DIR)rtmp.o $(LIBRTMP_SRC)rtmp.c
+	gcc -Wall   -DRTMPDUMP_VERSION=\"v2.4\" -DUSE_OPENSSL  -O2 -fPIC  -c -o $(BUILD_DIR)parseurl.o $(LIBRTMP_SRC)parseurl.c
+	gcc -Wall   -DRTMPDUMP_VERSION=\"v2.4\" -DUSE_OPENSSL  -O2 -fPIC  -c -o $(BUILD_DIR)log.o $(LIBRTMP_SRC)log.c
+	gcc -Wall   -DRTMPDUMP_VERSION=\"v2.4\" -DUSE_OPENSSL  -O2 -fPIC  -c -o $(BUILD_DIR)hashswf.o $(LIBRTMP_SRC)hashswf.c
+	gcc -Wall   -DRTMPDUMP_VERSION=\"v2.4\" -DUSE_OPENSSL  -O2 -fPIC  -c -o $(BUILD_DIR)amf.o $(LIBRTMP_SRC)amf.c
+	
+hiredis:
+	cc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  $(HIREDIS_DIR)/net.c -o $(BUILD_DIR)net.o
+	cc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  $(HIREDIS_DIR)/hiredis.c -o $(BUILD_DIR)hiredis.o
+	cc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  $(HIREDIS_DIR)/sds.c -o $(BUILD_DIR)sds.o
+	cc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  $(HIREDIS_DIR)/async.c -o $(BUILD_DIR)async.o
+	cc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  $(HIREDIS_DIR)/read.c -o $(BUILD_DIR)read.o
