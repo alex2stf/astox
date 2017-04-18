@@ -33,7 +33,7 @@ namespace astox {
         _message = message;
         _code = lineNumber;
         _fileName = fileName;
-        string fileNameParsed = DBG_FN(fileName);
+        string fileNameParsed = (fileName);
         if (fileNameParsed.at(0) == ASTOX_OS_SEPARATOR) {
             fileNameParsed.erase(fileNameParsed.begin());
         }

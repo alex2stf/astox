@@ -1059,12 +1059,10 @@ namespace astox {
         void debug();
     };
 
-	class Compiler {
-
-	};
 
 
-    std::string DBG_FN(const char * filename);
+
+
 
     namespace ecma {
         // enum order the same as stx_keywords order

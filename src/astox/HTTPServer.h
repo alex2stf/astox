@@ -8,7 +8,7 @@
 #ifndef HTTPSERVER_H_
     #define HTTPSERVER_H_
     #include "Socket.h"
-    #include "StringAlg.h"
+    #include "Util.h"
     #include "astox.h"
 
     #ifndef _WIN32_WINNT

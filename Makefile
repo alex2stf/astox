@@ -12,7 +12,7 @@ BIN_DIR=bin/
 #final linker flags
 LIBS=-lpthread -lm
 LIB_PATHS=
-INCLUDES=-Isrc/astox/icc
+INCLUDES=
 DEFINES=
 OTHER_FLAGS=
 
@@ -189,7 +189,7 @@ ASTOX_OBJS = $(BUILD_DIR)Value.o\
 			$(BUILD_DIR)Musteen.o\
 			$(BUILD_DIR)ExtApi.o\
 			$(BUILD_DIR)ECMAScript.o\
-			$(BUILD_DIR)Util.o\
+			$(BUILD_DIR)util.o\
 			$(BUILD_DIR)Operators.o\
 			$(BUILD_DIR)Date.o\
 			$(BUILD_DIR)EcmaMethods.o\
@@ -200,9 +200,9 @@ ASTOX_OBJS = $(BUILD_DIR)Value.o\
 			$(BUILD_DIR)Autoconf.o\
 			$(BUILD_DIR)Properties.o\
 			$(BUILD_DIR)Mingui.o\
-			$(BUILD_DIR)Assert.o\
+			$(BUILD_DIR)testing.o\
 			$(BUILD_DIR)EventDispatcher.o\
-			$(BUILD_DIR)ScriptEngine.o
+			$(BUILD_DIR)scriptengine.o
 			
 
 
@@ -240,9 +240,9 @@ astxSelfConfigure:
 	$(COMPILER) $(CODE_SRC)astxSelfConfigure.cpp  $(DEFINES) $(INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)astxSelfConfigure 
 
 ####### ASTOX_OBJS:
-Libs: EventDispatcher Mingui Assert Properties ExtApi Mingui Autoconf Util Value String Boolean Number\
+Libs: EventDispatcher Mingui testing Properties ExtApi Mingui Autoconf util Value String Boolean Number\
 	Object Array Function Date Lang Pins Math Xhtml FileSystem Query Musteen\
-	CssLinter EcmaMethods HTTPServer Socket ECMAScript Operators Thread ScriptEngine
+	CssLinter EcmaMethods HTTPServer Socket ECMAScript Operators Thread scriptengine
 
 EventDispatcher:
 	$(COMPILER) $(ASTOX_SRC)EventDispatcher.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)EventDispatcher.o 
@@ -307,8 +307,8 @@ CssLinter:
 FileSystem:
 	$(COMPILER) $(ASTOX_SRC)FileSystem.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)FileSystem.o
 	
-Util:
-	$(COMPILER) $(ASTOX_SRC)Util.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Util.o
+util:
+	$(COMPILER) $(ASTOX_SRC)util.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)util.o
 	
 ECMAScript:
 	$(COMPILER) $(ASTOX_SRC)ECMAScript.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)ECMAScript.o
@@ -328,11 +328,11 @@ Socket:
 Thread:
 	$(COMPILER) $(ASTOX_SRC)Thread.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Thread.o
 	
-Assert:
-	$(COMPILER) $(ASTOX_SRC)Assert.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Assert.o
+testing:
+	$(COMPILER) $(ASTOX_SRC)testing.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)testing.o
 	
-ScriptEngine:
-	$(COMPILER) $(ASTOX_SRC)ScriptEngine.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)ScriptEngine.o
+scriptengine:
+	$(COMPILER) $(ASTOX_SRC)scriptengine.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)scriptengine.o
 	
 
 	

@@ -13,14 +13,7 @@ namespace astox {
     using namespace std;
     using namespace stringAlg;
 
-    std::string DBG_FN(const char * filename) {
-        std::string name = filename;
-        size_t poz = name.find_last_of(ASTOX_OS_SEPARATOR);
-        if (poz != std::string::npos) {
-            return name.substr(poz, name.size());
-        }
-        return name;
-    }
+
 
     void ScriptValueNode::debug() {
 #ifdef ASTX_DBG_ECMA

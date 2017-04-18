@@ -1,4 +1,4 @@
-#include "astox/Assert.h"
+#include "astox/testing.h"
 #include "astox/EcmaMethods.h"
 #include "astox/Autoconf.h"
 
