@@ -4,329 +4,156 @@ PLATFORM=$(shell uname)
 COMPILER=g++
 CCOMPILER=gcc
 
-BUILD_DIR = build/
-ASTOX_SRC=src/astox/
-CODE_SRC=src/
+BUILD_DIR=build/
+ASTOX_SRC=src/
+CODE_SRC=./
+TESTS_SRC=test/src/
 BIN_DIR=bin/
 
 #final linker flags
 LIBS=-lpthread -lm
 LIB_PATHS=
-INCLUDES=
+INCLUDES=-Iinclude
+TEST_INCLUDES=-Itest/include
 DEFINES=
 OTHER_FLAGS=
 
-
-MINGUI_LIBS=
-MINGUI_LIBPATH=
-MINGUI_DEFS=
-MINGUI_INCLUDES=
-MINGUI_FLAGS=
-MINGUI_FILE=MinGUI.cpp
-
-
-#MINGUI_MAC
-MINGUI_MAC_LIBS=
-MINGUI_MAC_LIBPATH=
-
-MINGUI_MAC_INCLUDES=
-MINGUI_MAC_FLAGS=-framework Cocoa -x objective-c
-
-
-#MINGUI_GTK
-MINGUI_GTK_LIBS=`pkg-config gtk+-2.0 libnotify --libs`
-MINGUI_GTK_LIBPATH=
-MINGUI_GTK_DEFS=-DASTOX_ENABLE_GTK
-MINGUI_GTK_INCLUDES=`pkg-config gtk+-2.0 libnotify --cflags-only-I`
-MINGUI_GTK_FLAGS=
-
-### ENABLE MINGUI SUPPORT ##########################################
-ifeq ($(ASTX_ENABLE_MINGUI),true)
-
-	ifeq ($(PLATFORM),Darwin)
-	    MINGUI_FILE=MinGUI.mm
-	   
-	    MINGUI_LIBS=$(MINGUI_MAC_LIBS)
-		MINGUI_LIBPATH=$(MINGUI_MAC_LIBPATH)
-		MINGUI_DEFS=-DASTX_ENABLE_OBJECTIVECPP
-		MINGUI_INCLUDES=$(MINGUI_MAC_INCLUDES)
-		MINGUI_FLAGS=$(MINGUI_MAC_FLAGS)
-		
-	else
-		MINGUI_FILE=MinGUI.cpp
-		
-		ifeq ($(PLATFORM),Linux)
-		#	MINGUI_LIBS=$(MINGUI_GTK_LIBS)
-		#	MINGUI_LIBPATH=$(MINGUI_GTK_LIBPATH)
-		#	MINGUI_DEFS=$(MINGUI_GTK_DEFS)
-		#	MINGUI_INCLUDES=$(MINGUI_GTK_INCLUDES)
-		#	MINGUI_FLAGS=$(MINGUI_GTK_FLAGS)
-		endif
-	endif
-
-
-
-	LIBS :=$(LIBS) $(MINGUI_LIBS)
-	LIB_PATHS :=$(LIB_PATHS) $(MINGUI_LIBPATH)
-	DEFINES :=$(DEFINES) $(MINGUI_DEFS)
-	INCLUDES := $(INCLUDES) $(MINGUI_INCLUDES)
-	OTHER_FLAGS := $(OTHER_FLAGS) $(MINGUI_FLAGS)
-endif
-
-
-ifeq ($(ASTX_ENABLE_CURL),true)
-	#curl options
-	CURL_LIBS=-lcurl
-	CURL_LIBPATH=
-	CURL_DEFS=-DASTX_ENABLE_CURL
-	CURL_INCLUDES=
-	CURL_FLAGS=
-	
-endif
-
-
-ifeq ($(ASTX_ENABLE_SSH2),true)
-	#ssh2 options
-	#SSH2_LIBS=-lssh2
-	#SSH2_LIBPATH=-L/opt/local/lib 
-	#SSH2_DEFS=-DASTX_ENABLE_LIBSSH2
-	#SSH2_INCLUDES=-I/opt/local/include
-	#SSH2_FLAGS=
-	
-	
-	LIBS :=$(LIBS) $(SSH2_LIBS)
-	LIB_PATHS :=$(LIB_PATHS) $(SSH2_LIBPATH)
-	DEFINES :=$(DEFINES) $(SSH2_DEFS)
-	INCLUDES :=$(INCLUDES) $(SSH2_INCLUDES)
-	OTHER_FLAGS :=$(OTHER_FLAGS) $(SSH2_FLAGS)
-endif
-
-#LIBS :=$(LIBS) -lssl
-#OTHER_FLAGS :=$(OTHER_FLAGS) -framework CoreFoundation
-
-ifeq ($(ASTX_ENABLE_BOOST),true)
-	LIBS :=$(LIBS) -lboost_filesystem-mt -lboost_system-mt
-	#LIB_PATHS :=$(LIB_PATHS) /opt/local/lib
-	DEFINES :=$(DEFINES) -DASTX_ENABLE_BOOST
-	#INCLUDES :=$(INCLUDES)
-endif
-
-ifeq ($(ASTX_ENABLE_SASS),true)
-	#sass_options
-	#SASS_LIBS=-lsass -ldl
-	#SASS_LIBPATH=
-	#SASS_DEFS=-DASTX_ENABLE_SASS
-	#SASS_INCLUDES=
-	#SASS_FLAGS=-Wall -O2 -std=c++0x -fPIC //merge pe mac
-	#SASS_FLAGS=-Wall -O2 -std=c++0x -fPIC
-	
-	LIBS :=$(LIBS) $(SASS_LIBS)
-	LIB_PATHS :=$(LIB_PATHS) $(SASS_LIBPATH)
-	DEFINES :=$(DEFINES) $(SASS_DEFS)
-	INCLUDES :=$(INCLUDES) $(SASS_INCLUDES)
-	OTHER_FLAGS :=$(OTHER_FLAGS) $(SASS_FLAGS)
-endif
-
-
-ifeq ($(ASTX_ENABLE_FFMPEG),true)
-#FFMPEG_FLAGS
-FFMPEG_ROOT=/Users/alexstf/Desktop/ffmpeg/
-FFMPEG_LIBDIRS=-L$(FFMPEG_ROOT)libavcodec -L$(FFMPEG_ROOT)libavdevice -L$(FFMPEG_ROOT)libavfilter -L$(FFMPEG_ROOT)libswscale
-FFMPEG_LIBS=-L/opt/local/lib -ljpeg -lavformat -lavcodec -lavutil -lswscale -lmp3lame -lz
-endif
-
-ifeq ($(ASTX_USE_HIREDIS),true)
-	DEFINES := $(DEFINES) -DASTX_ENABLE_HIREDIS
-	OTHER_FLAGS := $(OTHER_FLAGS) -lhiredis
-endif
-
-ifeq ($(USE_BOOST_LIBS),true)
-	LINKER_FLAGS=-lboost_filesystem -lboost_regex -lboost_thread
-endif
-
-DEBUG_DEFS=
 #simulate nodejs enviroment with static cast:
-#DEBUG_DEFS := -DASTX_VALUE_STATIC_CAST
-# -DASTX_VALUE_STATIC_CAST
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_SELF_CONFIGURE
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_SSH2
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_METHODS
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_METHODS_EXTERNS
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_JS_PRINT
-DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_EVENT_DISPATCHER
+#DEBUG_DEFS := -DASTX_value_STATIC_CAST
 
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_EXEC_SCRIPT 
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_DETECT_NODES
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_FS
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_FS_WATCHER
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_GET_MEMBER
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_OPERATE
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_COMPARE
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_DETECT_NODES
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_CONTEXTS
 
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_EXEC_SCRIPT
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_ECMA_SPLIT_COMMAND
-#DEBUG_DEFS := $(DEBUG_DEFS) -DASTX_DBG_REGEX
+#for cygwin option -fPIC is not used by libs
+ifneq (,$(findstring CYGWIN,$(shell uname)))
+  OBJ_SETTINGS=$(DEFINES) $(INCLUDES) -c
+else
+  OBJ_SETTINGS=$(DEFINES) $(INCLUDES) -fPIC -c
+endif
 
-DEFINES := $(DEFINES) $(DEBUG_DEFS)
 
-OBJ_SETTINGS= $(DEFINES) $(INCLUDES) -c
-
-ASTOX_OBJS = $(BUILD_DIR)Value.o\
-			$(BUILD_DIR)String.o\
-			$(BUILD_DIR)Boolean.o\
-			$(BUILD_DIR)Number.o\
-			$(BUILD_DIR)Object.o\
-			$(BUILD_DIR)Array.o\
-			$(BUILD_DIR)Function.o\
-			$(BUILD_DIR)Lang.o\
-			$(BUILD_DIR)Pins.o\
-			$(BUILD_DIR)Math.o\
-			$(BUILD_DIR)FileSystem.o\
-			$(BUILD_DIR)Xhtml.o\
-			$(BUILD_DIR)Query.o\
-			$(BUILD_DIR)Musteen.o\
-			$(BUILD_DIR)ExtApi.o\
-			$(BUILD_DIR)ECMAScript.o\
+ASTOX_OBJS = $(BUILD_DIR)value.o\
+			$(BUILD_DIR)string.o\
+			$(BUILD_DIR)boolean.o\
+			$(BUILD_DIR)number.o\
+			$(BUILD_DIR)object.o\
+			$(BUILD_DIR)array.o\
+			$(BUILD_DIR)function.o\
+			$(BUILD_DIR)error.o\
 			$(BUILD_DIR)util.o\
-			$(BUILD_DIR)Operators.o\
-			$(BUILD_DIR)Date.o\
-			$(BUILD_DIR)EcmaMethods.o\
-			$(BUILD_DIR)HTTPServer.o\
-			$(BUILD_DIR)Socket.o\
-			$(BUILD_DIR)Thread.o\
-			$(BUILD_DIR)CssLinter.o\
-			$(BUILD_DIR)Autoconf.o\
-			$(BUILD_DIR)Properties.o\
-			$(BUILD_DIR)Mingui.o\
+			$(BUILD_DIR)date.o\
 			$(BUILD_DIR)testing.o\
-			$(BUILD_DIR)EventDispatcher.o\
-			$(BUILD_DIR)scriptengine.o
+			$(BUILD_DIR)methods.o\
+			$(BUILD_DIR)filesystem.o\
+			$(BUILD_DIR)stack.o\
+			$(BUILD_DIR)regexp.o\
+			$(BUILD_DIR)serializers.o\
+			$(BUILD_DIR)scriptengine.o\
+			$(BUILD_DIR)thread.o\
+			$(BUILD_DIR)lexic.o
 			
 
 
 ASTOX_MAKE_LIBS = Libs
 
 
-all: $(ASTOX_MAKE_LIBS) astox
+all: prepareDirs Libs tests
 
-viewVars:
-	@echo "DEFINES: $(DEFINES)"
-	@echo "INCLUDES: $(INCLUDES)"
-	@echo "LIBS: $(LIBS)"
-	@echo "LIB_PATHS: $(LIB_PATHS)"
-	@echo "OTHER_FLAGS: $(OTHER_FLAGS)"
-	@echo "DEBUG OPTIONS:\n ASTX_DBG_FS (file system debugging)\n ASTX_DBG_ECMA (astox ecma debugging)\n ASTX_DBG_SSH2(ssh2 debugging)"
+
+socket-tests:
+	$(COMPILER) $(TESTS_SRC)socket.cpp $(DEFINES) $(OTHER_FLAGS) -o $(BIN_DIR)socket-test
+	
+	
+shared: Libs shared-lib
+
+display-vars:
+	@echo $(BIN_DIR) 
+	@echo $(JAVA_HOME)
+	
 
 prepareDirs:
 	mkdir -p $(BIN_DIR) $(BUILD_DIR)
 
-demuxing:
-	gcc $(CODE_SRC)demuxing_decoding.c  $(DEFINES) $(INCLUDES) $(FFMPEG_LIBS) -o $(BIN_DIR)demuxing
-
-ffipush: ffipushbin
-
-ffipushbin:
-	gcc $(ASTOX_SRC)CApi.c $(CODE_SRC)ffipush.c $(DEFINES) $(INCLUDES) $(FFMPEG_LIBS) -o $(BIN_DIR)ffipush
-
-astox:
-	$(COMPILER) $(CODE_SRC)main.cpp $(DEFINES) $(INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)astox 
-
-astxUnitTests:
-	$(COMPILER) $(CODE_SRC)astxUnitTests.cpp  $(DEFINES) $(INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)astxUnitTests 
+ext-jni:
+	$(COMPILER) -Wl,--add-stdcall-alias  -I"$(JAVA_HOME)\include" -I"$(JAVA_HOME)\include\win32" $(INCLUDES) -D__int64=int64_t -shared -o lib/astox-jni.dll $(ASTOX_SRC)ext-jni.cpp
 	
+	#/usr/bin/ld: build/value.o: relocation R_X86_64_32 against `_ZTVN5astox5ValueE' can not be used when making a shared object; recompile with -fPIC
+	
+ext-jni-linux:
+	$(COMPILER) -DSTX_ENABLE_JNI -D__int64=int64_t -I$(JAVA_HOME)"/include" -I"$(JAVA_HOME)/include/linux" $(INCLUDES) -o bin/libastox-jni.so -fPIC -shared $(ASTOX_SRC)ext-jni.cpp $(ASTOX_OBJS)
+
+ext-jni-cygwin:
+	$(COMPILER) -DSTX_ENABLE_JNI -D__int64=int64_t -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" $(INCLUDES) -o bin/astox-jni.dll -shared $(ASTOX_SRC)ext-jni.cpp $(ASTOX_OBJS)
+	
+shared-lib:
+	$(COMPILER) -shared -o lib/astox.so $(ASTOX_OBJS) $(INCLUDES)
+
+tests:
+	$(COMPILER) $(TESTS_SRC)astox-tests.cpp $(DEFINES) $(INCLUDES) $(TEST_INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)astox-test
+
+codoc:
+	$(COMPILER) $(CODE_SRC)codoc.cpp $(DEFINES) $(INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)codoc
+
+
 astxSelfConfigure:
 	$(COMPILER) $(CODE_SRC)astxSelfConfigure.cpp  $(DEFINES) $(INCLUDES) $(ASTOX_OBJS) $(OTHER_FLAGS) $(LIB_PATHS) $(LIBS) -o $(BIN_DIR)astxSelfConfigure 
 
 ####### ASTOX_OBJS:
-Libs: EventDispatcher Mingui testing Properties ExtApi Mingui Autoconf util Value String Boolean Number\
-	Object Array Function Date Lang Pins Math Xhtml FileSystem Query Musteen\
-	CssLinter EcmaMethods HTTPServer Socket ECMAScript Operators Thread scriptengine
+Libs: thread value string boolean number methods lexic serializers util regexp error stack function testing filesystem\
+	object array date math scriptengine  
 
-EventDispatcher:
-	$(COMPILER) $(ASTOX_SRC)EventDispatcher.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)EventDispatcher.o 
 
-Autoconf:
-	$(COMPILER) $(ASTOX_SRC)Autoconf.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Autoconf.o 
+autoconf:
+	$(COMPILER) $(ASTOX_SRC)autoconf.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)autoconf.o 
+	
+thread:
+	$(COMPILER) $(ASTOX_SRC)thread.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)thread.o
+	
+lexic:
+	$(COMPILER) $(ASTOX_SRC)lexic.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)lexic.o
+	
+serializers:
+	$(COMPILER) $(ASTOX_SRC)serializers.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)serializers.o
+	
+value:
+	$(COMPILER) $(ASTOX_SRC)value.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)value.o
+	
+string:
+	$(COMPILER) $(ASTOX_SRC)string.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)string.o
+	
+boolean:
+	$(COMPILER) $(ASTOX_SRC)boolean.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)boolean.o
 
-Mingui:
-	$(COMPILER) $(ASTOX_SRC)$(MINGUI_FILE) $(OBJ_SETTINGS) -o $(BUILD_DIR)Mingui.o 
+number:
+	$(COMPILER) $(ASTOX_SRC)number.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)number.o
+	
+object:
+	$(COMPILER) $(ASTOX_SRC)object.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)object.o
+	
+array:
+	$(COMPILER) $(ASTOX_SRC)array.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)array.o
+	
+function:
+	$(COMPILER) $(ASTOX_SRC)function.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)function.o
+	
+date:
+	$(COMPILER) $(ASTOX_SRC)date.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)date.o
 
-ExtApi:
-	$(COMPILER) $(ASTOX_SRC)ExtApi.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)ExtApi.o 
-
-Properties:
-	$(COMPILER) $(ASTOX_SRC)Properties.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Properties.o
+error:
+	$(COMPILER) $(ASTOX_SRC)error.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)error.o
 	
-Value:
-	$(COMPILER) $(ASTOX_SRC)Value.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Value.o
+regexp:
+	$(COMPILER) $(ASTOX_SRC)regexp.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)regexp.o
 	
-String:
-	$(COMPILER) $(ASTOX_SRC)String.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)String.o
+math:
+	$(COMPILER) $(ASTOX_SRC)math.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)math.o
 	
-Boolean:
-	$(COMPILER) $(ASTOX_SRC)Boolean.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Boolean.o
-
-Number:
-	$(COMPILER) $(ASTOX_SRC)Number.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Number.o
-	
-Object:
-	$(COMPILER) $(ASTOX_SRC)Object.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Object.o
-	
-Array:
-	$(COMPILER) $(ASTOX_SRC)Array.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Array.o
-	
-Function:
-	$(COMPILER) $(ASTOX_SRC)Function.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Function.o
-	
-Date:
-	$(COMPILER) $(ASTOX_SRC)Date.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Date.o
-	
-Lang:
-	$(COMPILER) $(ASTOX_SRC)Lang.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Lang.o
-
-Pins:
-	$(COMPILER) $(ASTOX_SRC)Pins.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Pins.o
-	
-Math:
-	$(COMPILER) $(ASTOX_SRC)Math.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Math.o
-
-Xhtml:
-	$(COMPILER) $(ASTOX_SRC)Xhtml.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Xhtml.o
-	
-Query:
-	$(COMPILER) $(ASTOX_SRC)Query.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Query.o
-	
-Musteen:
-	$(COMPILER) $(ASTOX_SRC)Musteen.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Musteen.o
-	
-CssLinter:
-	$(COMPILER) $(ASTOX_SRC)CssLinter.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)CssLinter.o
+methods:
+	$(COMPILER) $(ASTOX_SRC)methods.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)methods.o
 		
-FileSystem:
-	$(COMPILER) $(ASTOX_SRC)FileSystem.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)FileSystem.o
+filesystem:
+	$(COMPILER) $(ASTOX_SRC)filesystem.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)filesystem.o
 	
 util:
 	$(COMPILER) $(ASTOX_SRC)util.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)util.o
-	
-ECMAScript:
-	$(COMPILER) $(ASTOX_SRC)ECMAScript.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)ECMAScript.o
-
-EcmaMethods:
-	$(COMPILER) $(ASTOX_SRC)EcmaMethods.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)EcmaMethods.o
-
-Operators:
-	$(COMPILER) $(ASTOX_SRC)Operators.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Operators.o
-
-HTTPServer:
-	$(COMPILER) $(ASTOX_SRC)HTTPServer.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)HTTPServer.o
-
-Socket:
-	$(COMPILER) $(ASTOX_SRC)Socket.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Socket.o
-
-Thread:
-	$(COMPILER) $(ASTOX_SRC)Thread.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)Thread.o
 	
 testing:
 	$(COMPILER) $(ASTOX_SRC)testing.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)testing.o
@@ -334,12 +161,16 @@ testing:
 scriptengine:
 	$(COMPILER) $(ASTOX_SRC)scriptengine.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)scriptengine.o
 	
+stack:
+	$(COMPILER) $(ASTOX_SRC)stack.cpp $(OBJ_SETTINGS) -o $(BUILD_DIR)stack.o
+	
+
 
 	
 
 clean:
 	rm $(BUILD_DIR)* 
-	#rm $(BIN_DIR)*
+	rm $(BIN_DIR)*
 	
 install:
 	cp $(BIN_DIR)astox /usr/local/bin/astox

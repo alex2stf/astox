@@ -8,3 +8,4 @@ projects/
 src/.DS_Store
 src/archive/.DS_Store
 /Debug
+build/
