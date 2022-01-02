@@ -1,0 +1,5 @@
+#ifndef ASTOX_SQL_CONNECT_H
+#define ASTOX_SQL_CONNECT_H
+
+
+#endif // !ASTOX_SQL_CONNECT_H

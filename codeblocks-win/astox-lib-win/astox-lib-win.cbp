@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="astox-lib-win" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../bin/Debug/astox-lib-win" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+					<Add library="ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../../bin/Release/astox-lib-win" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="user32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add directory="../../lib/include" />
+		</Compiler>
+		<Unit filename="../../lib/include/astox.h" />
+		<Unit filename="../../lib/include/filesystem.h" />
+		<Unit filename="../../lib/include/lexic.h" />
+		<Unit filename="../../lib/include/macros.h" />
+		<Unit filename="../../lib/include/methods.h" />
+		<Unit filename="../../lib/include/mingui.h" />
+		<Unit filename="../../lib/include/scriptengine.h" />
+		<Unit filename="../../lib/include/serializers.h" />
+		<Unit filename="../../lib/include/socket.h" />
+		<Unit filename="../../lib/include/stack.h" />
+		<Unit filename="../../lib/include/testing.h" />
+		<Unit filename="../../lib/include/thread.h" />
+		<Unit filename="../../lib/include/types.h" />
+		<Unit filename="../../lib/include/util.h" />
+		<Unit filename="../../lib/src/array.cpp" />
+		<Unit filename="../../lib/src/boolean.cpp" />
+		<Unit filename="../../lib/src/date.cpp" />
+		<Unit filename="../../lib/src/error.cpp" />
+		<Unit filename="../../lib/src/filesystem.cpp" />
+		<Unit filename="../../lib/src/function.cpp" />
+		<Unit filename="../../lib/src/lexic.cpp" />
+		<Unit filename="../../lib/src/math.cpp" />
+		<Unit filename="../../lib/src/methods.cpp" />
+		<Unit filename="../../lib/src/number.cpp" />
+		<Unit filename="../../lib/src/object.cpp" />
+		<Unit filename="../../lib/src/regexp.cpp" />
+		<Unit filename="../../lib/src/scriptengine.cpp" />
+		<Unit filename="../../lib/src/serializers.cpp" />
+		<Unit filename="../../lib/src/socket.cpp" />
+		<Unit filename="../../lib/src/stack.cpp" />
+		<Unit filename="../../lib/src/string.cpp" />
+		<Unit filename="../../lib/src/testing.cpp" />
+		<Unit filename="../../lib/src/thread.cpp" />
+		<Unit filename="../../lib/src/util.cpp" />
+		<Unit filename="../../lib/src/value.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

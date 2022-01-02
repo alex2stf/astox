@@ -1,0 +1,5 @@
+#ifndef ASTOX_FILE_UTIL_H
+#define ASTOX_FILE_UTIL_H
+
+
+#endif // !ASTOX_FILE_UTIL_H

@@ -1,0 +1,240 @@
+# depslib dependency file v1.0
+1572009706 source:c:\users\alexandru2.stefan\desktop\astox-master\tests\src\server-test.cpp
+	"astoxtests.h"
+	"socket.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\astoxtests.h
+	"datetest.h"
+	"regextest.h"
+	"syntaxjstest.h"
+	"threadtest.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\datetest.h
+	<astox.h>
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\astox.h
+	"lexic.h"
+	"scriptengine.h"
+	"testing.h"
+	"serializers.h"
+	"thread.h"
+	"ext-jni.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\lexic.h
+	"macros.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\macros.h
+	<sstream>
+	<ostream>
+	<iostream>
+	<string>
+	<time.h>
+	<vector>
+	<algorithm>
+	<cctype>
+	<functional>
+	<fstream>
+	<iterator>
+	<algorithm>
+	<map>
+	<stdio.h>
+	<ctime>
+	<stdlib.h>
+	<string>
+	<cstring>
+	<iterator>
+	<math.h>
+	<set>
+	<limits.h>
+	<cmath>
+	<float.h>
+	<windows.h>
+	<direct.h>
+	<tchar.h>
+	<wchar.h>
+	<comdef.h>
+	<comutil.h>
+	<sys/inotify.h>
+	<regex>
+	<regex.h>
+	<unistd.h>
+	<android/log.h>
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\scriptengine.h
+	"types.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\types.h
+	<iostream>
+	<map>
+	<exception>
+	<stdexcept>
+	<cmath>
+	<iomanip>
+	"util.h"
+	"macros.h"
+	"stack.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\util.h
+	"macros.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\stack.h
+	"macros.h"
+	"lexic.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\testing.h
+	<iostream>
+	<exception>
+	"mingui.h"
+	"methods.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\mingui.h
+	"types.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\methods.h
+	"mingui.h"
+	"filesystem.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\filesystem.h
+	"scriptengine.h"
+	"thread.h"
+	<mach-o/dyld.h>
+	<tchar.h>
+	<strsafe.h>
+	<boost/filesystem.hpp>
+	<sys/inotify.h>
+	<fcntl.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<dirent.h>
+	<ftw.h>
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<unistd.h>
+	<dirent.h>
+	<stdio.h>
+	<stdarg.h>
+
+1572004921 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\thread.h
+	"macros.h"
+	"util.h"
+	"types.h"
+	<iostream>
+	<string>
+	<process.h>
+	<stddef.h>
+	<stdlib.h>
+	<conio.h>
+	<sys/param.h>
+	<sys/sysctl.h>
+	<unistd.h>
+	<pthread.h>
+	<signal.h>
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\serializers.h
+	"types.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\ext-jni.h
+	"macros.h"
+	"types.h"
+	<jni.h>
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\regextest.h
+	"staticvars.h"
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\staticvars.h
+	<astox.h>
+
+1569843784 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\syntaxjstest.h
+	"staticvars.h"
+
+1571991376 c:\users\alexandru2.stefan\desktop\astox-master\tests\include\threadtest.h
+	"thread.h"
+	"staticvars.h"
+
+1572009184 c:\users\alexandru2.stefan\desktop\astox-master\lib\include\socket.h
+	"macros.h"
+	<windows.h>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<errno.h>
+	<unistd.h>
+	<arpa/inet.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<sys/time.h>
+	<signal.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<iostream>
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\array.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\boolean.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\date.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\error.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\filesystem.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\function.cpp
+	<astox.h>
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\lexic.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\math.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\methods.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\number.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\object.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\regexp.cpp
+	<astox.h>
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\scriptengine.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\serializers.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\stack.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\string.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\testing.cpp
+	"astox.h"
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\util.cpp
+	<astox.h>
+	<sstream>
+	<iomanip>
+
+1569847384 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\value.cpp
+	<astox.h>
+
+1572013249 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\socket.cpp
+	"socket.h"
+	<list>
+
+1572008552 source:c:\users\alexandru2.stefan\desktop\astox-master\lib\src\thread.cpp
+	"astox.h"
+	<pthread.h>
+

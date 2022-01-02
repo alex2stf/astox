@@ -1,0 +1,13 @@
+{
+  "name": "astox",
+  "scope": [
+    "binary", "python", "nodejs"
+  ],
+
+  "dependencies": [
+    "ORACLE_CLIENT"
+  ],
+  "include": ["lib/include"],
+  "sources": ["lib/include", "lib/src"],
+  "path-solving": "relative"
+}
